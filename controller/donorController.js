@@ -7,17 +7,19 @@ exports.create = (req, res) => {
     });
   }
   // console.log("req",req.body)
-  const donora = {
-    name: req.body.name,
-    lastname: req.body.lastname,
-    bloodGroup: req.body.bloodGroup,
-    phoneNumber: req.body.phoneNumber,
-    location: req.body.city,
-    previousDonation: req.body.previousBloodDonation,
-  };
-  // console.log(donora)
-  const query = `insert into donor set ? `
-  sql.query(query,donora,(err,data)=>{
+  // const donora = {
+  //   name: req.body.name,
+  //   lastname: req.body.lastname,
+  //   bloodGroup: req.body.bloodGroup,
+  //   phoneNumber: req.body.phoneNumber,
+  //   location: req.body.city,
+  //   previousDonation: req.body.previousBloodDonation,
+  // };
+  // console.log("req.body is",req.body)
+  const {name, lastname, bloodGroup, phoneNumber, city, previousBloodDonation} = req.body;
+  
+  const query = "insert into donor (name, lastname, bloodGroup, phoneNumber, location, previousDonation) values (?, ?, ?, ?, ?, ?)"
+  sql.query(query,[name,lastname,bloodGroup,phoneNumber,city,previousBloodDonation],(err,data)=>{
     if(err){
           if (err.code === 'ER_DUP_ENTRY' || err.code === 'ER_DUP_KEY') {
               
